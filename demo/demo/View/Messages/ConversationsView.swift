@@ -1,27 +1,27 @@
 //
-//  FeedView.swift
+//  ConversationsView.swift
 //  demo
 //
-//  Created by Akira Akimoto on 2021/5/22.
+//  Created by Akira Akimoto on 2021/5/26.
 //
 
 import SwiftUI
 
-struct FeedView: View {
+struct ConversationsView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             ScrollView{
                 VStack{
                     ForEach(0..<20) { _ in
-                        TweetCell()
+                        ConversationCell()
                     }
                 }.padding()
             }
             
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Image("Tweet")
+                Image(systemName: "envelope")
                     .resizable()
-                    .renderingMode(.template)
+                    .scaledToFit()
                     .frame(width: 32, height: 32)
                     .padding()
             })
@@ -33,8 +33,8 @@ struct FeedView: View {
     }
 }
 
-struct FeedView_Previews: PreviewProvider {
+struct ConversationsView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        ConversationsView()
     }
 }
