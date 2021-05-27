@@ -23,9 +23,10 @@ struct ConversationCell: View {
                         .font(.system(size: 14, weight: .semibold))
                     
                     Text("messages message messages messages messages messages")
-                        .font(.system(size: 15))
+                        .font(.system(size: 14))
                         .lineLimit(2)
                 }
+                .foregroundColor(.black)
                 .padding(.trailing)
             }
             
