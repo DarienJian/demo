@@ -25,6 +25,7 @@ struct UserCell: View {
                     .font(.system(size: 14))
                 
             }
+            .foregroundColor(.black)
         }
     }
 }
