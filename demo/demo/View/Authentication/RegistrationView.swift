@@ -18,6 +18,7 @@ struct RegistrationView: View {
     // @Environment 取得環境變數
     // PresentationMode 當前視圖是否由另一個視圖呈現的指示
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @ObservedObject var viewModel = AuthViewModel()
     
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
@@ -81,7 +82,10 @@ struct RegistrationView: View {
                 }
                 .padding(.horizontal, 32)
                 
-                Button(action: { }, label: {
+                Button(action: {
+                    guard let image = selectedUIImage else { return }
+                    viewModel.registerUser(email: email, password: password, username: username, fullname: fullname, profileImage: image)
+                }, label: {
                     Text("Sign Up")
                         .font(.headline)
                         .foregroundColor(.blue)
