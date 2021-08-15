@@ -18,6 +18,7 @@ struct RegistrationView: View {
     // @Environment 取得環境變數
     // PresentationMode 當前視圖是否由另一個視圖呈現的指示
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    // ObservedObject 監聽這個物件所發出的事件通知
     @ObservedObject var viewModel = AuthViewModel()
     
     func loadImage() {

@@ -9,6 +9,27 @@ import SwiftUI
 import Firebase
 
 class AuthViewModel: ObservableObject {
+    // 當這個 Published 被更新時，會發送一個事件通知給監控它的物件
+    @Published var userSession: FirebaseAuth.User?
+    @Published var isAuthenticating = false
+    @Published var error: Error?
+    @Published var user: User?
+    
+    init() {
+        userSession = Auth.auth().currentUser
+    }
+    
+    func login(email:String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("DEBUD: Failed to login: \(error.localizedDescription)")
+                return
+            }
+            
+            print("成功登入")
+        }
+    }
+    
     
     func registerUser (email: String, password: String, username: String, fullname: String, profileImage: UIImage) {
         
@@ -49,6 +70,11 @@ class AuthViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func signOut() {
+        userSession = nil
+        try?Auth.auth().signOut()
     }
 }
 
