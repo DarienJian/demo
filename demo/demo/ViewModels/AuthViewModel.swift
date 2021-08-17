@@ -26,6 +26,7 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
+            self.userSession = result?.user
             print("成功登入")
         }
     }
@@ -43,8 +44,6 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            print("成功上傳圖片")
-            
             storageRef.downloadURL { url, _ in
                 guard let profileImageUrl = url?.absoluteString else { return }
                 Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -52,20 +51,19 @@ class AuthViewModel: ObservableObject {
                         print("DEBUG error \(error.localizedDescription)")
                         return
                     }
-                    print("成功建立使用者")
                     
                     guard let user = result?.user else { return }
                     
                     let data = [
                         "email": email,
-                        "username": username,
+                        "username": username.lowercased(),
                         "fullname": fullname,
                         "profileImageUrl": profileImageUrl,
                         "uid": user.uid
                     ]
                     
                     Firestore.firestore().collection("users").document(user.uid).setData(data) { _ in
-                        print("DEBUG: 成功上傳資料")
+                        self.userSession = user
                     }
                 }
             }
