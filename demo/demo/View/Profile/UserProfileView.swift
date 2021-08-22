@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct UserProfileView: View {
+    let user: User
+    @ObservedObject var viewModel: ProfileViewModel
+    
+    init (user: User) {
+        self.user = user
+        self.viewModel = ProfileViewModel(user: user)
+    }
+    
     // 預設從.tweets
     @State var selectedFilter: TweetFilterOptions = .tweets
     var body: some View {
         ScrollView {
             VStack {
-                ProfileHeaderView()
+                ProfileHeaderView(isFollowed: $viewModel.isFollowed, viewModel: viewModel)
                     .padding()
                 
                 FilterButtonView(selectedOption: $selectedFilter)
@@ -21,11 +29,5 @@ struct UserProfileView: View {
             }
             .navigationTitle("batman")
         }
-    }
-}
-
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfileView()
     }
 }
