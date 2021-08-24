@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import KingfisherSwiftUI
 
 struct ContentView: View {
     // EnvironmentObject 可以在任何需要的地方共享模型數據, 確保數據更新時自動保持更新
     @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         Group {
             if viewModel.userSession != nil {
@@ -34,6 +36,18 @@ struct ContentView: View {
                             }
                     }
                     .navigationTitle("Home")
+                    .navigationBarItems(leading: Button(action: {
+                        viewModel.signOut()
+                    }, label: {
+                        if let user = viewModel.user {
+                            KFImage(URL(string: user.profileImageUrl))
+                                .resizable()
+                                .scaledToFill()
+                                .clipped()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(16)
+                        }
+                    }))
                     .navigationBarTitleDisplayMode(.inline)
                 }
             } else {

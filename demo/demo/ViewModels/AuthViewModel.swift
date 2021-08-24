@@ -20,6 +20,9 @@ class AuthViewModel: ObservableObject {
         fetchUser()
     }
     
+    // 靜態屬性, 可全域調用AuthViewModel內的屬性, 而不觸發init 初始化
+    static let shared = AuthViewModel()
+    
     func login(email:String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -28,7 +31,7 @@ class AuthViewModel: ObservableObject {
             }
             
             self.userSession = result?.user
-            print("成功登入")
+            self.fetchUser()
         }
     }
     
@@ -65,6 +68,7 @@ class AuthViewModel: ObservableObject {
                     
                     Firestore.firestore().collection("users").document(user.uid).setData(data) { _ in
                         self.userSession = user
+                        self.fetchUser()
                     }
                 }
             }
@@ -81,8 +85,7 @@ class AuthViewModel: ObservableObject {
         
         Firestore.firestore().collection("users").document(uid).getDocument { snapshot, _ in
             guard let data = snapshot?.data() else { return }
-            let user = User(dictionary: data)
-            print("DEBUG User is \(user.username)")
+            self.user = User(dictionary: data)
         }
     }
 }
