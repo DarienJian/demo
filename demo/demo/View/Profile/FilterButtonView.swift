@@ -10,7 +10,7 @@ import SwiftUI
 // protocol CaseIterable 是將枚舉可以以陣列方式使用
 enum TweetFilterOptions: Int , CaseIterable {
     case tweets
-    case replies
+//    case replies
     case likes
     
     var title: String {
@@ -18,8 +18,8 @@ enum TweetFilterOptions: Int , CaseIterable {
         switch self {
         case .tweets:
             return "Tweets"
-        case .replies:
-            return "Tweets & Replies"
+//        case .replies:
+//            return "Tweets & Replies"
         case .likes:
             return "Likes"
         }
