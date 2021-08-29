@@ -11,7 +11,12 @@ import KingfisherSwiftUI
 struct NewTweetView: View {
     @Binding var isPresented: Bool
     @State var captionText: String = ""
+    @ObservedObject var viewModel: UploadTweetViewModel
     
+    init (isPresented: Binding<Bool>) {
+        self._isPresented = isPresented
+        self.viewModel = UploadTweetViewModel(isPresented: isPresented)
+    }
     
     var body: some View {
         NavigationView {
@@ -35,7 +40,9 @@ struct NewTweetView: View {
                     Text("Cancel")
                         .foregroundColor(.blue)
                 }),
-                trailing: Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                trailing: Button(action: {
+                    viewModel.uploadTweet(caption: captionText)
+                }, label: {
                     Text("Tweet")
                         .padding(.horizontal)
                         .padding(.vertical, 8)
